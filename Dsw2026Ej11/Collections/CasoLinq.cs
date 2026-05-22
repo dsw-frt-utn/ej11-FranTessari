@@ -1,4 +1,7 @@
-﻿namespace Dsw2026Ej11.Collections;
+﻿using Dsw2026Ej11.Domain;
+using System.Linq;
+
+namespace Dsw2026Ej11.Collections;
 
 /*
  * Para cada punto crear un método que permita:
@@ -16,4 +19,84 @@
  */
 public class CasoLinq
 {
+    private List<Libro> libros;
+
+    public CasoLinq()
+    {
+        libros = Libro.CrearLista();
+    }
+
+    // 1. Obtener el primer libro
+    public Libro GetPrimero()
+    {
+        return libros.First();
+    }
+
+    // 2. Obtener el último libro
+    public Libro GetUltimo()
+    {
+        return libros.Last();
+    }
+
+    // 3. Obtener suma de precios
+    public decimal GetTotalPrecios()
+    {
+        return libros.Sum(l => l.Precio);
+    }
+
+    // 4. Obtener promedio de precios
+    public decimal GetPromedioPrecios()
+    {
+        return libros.Average(l => l.Precio);
+    }
+
+    // 5. Obtener libros con Id mayor a 15
+    public List<Libro> GetListById()
+    {
+        return libros
+            .Where(l => l.Id > 15)
+            .ToList();
+    }
+
+    // 6. Obtener lista con título y precio
+    public List<string> GetLibros()
+    {
+        return libros
+            .Select(l => $"{l.Titulo} - {l.Precio:C}")
+            .ToList();
+    }
+
+    // 7. Libro con mayor precio
+    public Libro GetMayorPrecio()
+    {
+        return libros
+            .OrderByDescending(l => l.Precio)
+            .First();
+    }
+
+    // 8. Libro con menor precio
+    public Libro GetMenorPrecio()
+    {
+        return libros
+            .OrderBy(l => l.Precio)
+            .First();
+    }
+
+    // 9. Libros con precio mayor al promedio
+    public List<Libro> GetMayorPromedio()
+    {
+        decimal promedio = libros.Average(l => l.Precio);
+
+        return libros
+            .Where(l => l.Precio > promedio)
+            .ToList();
+    }
+
+    // 10. Libros ordenados por título descendente
+    public List<Libro> GetOrdenadosDesc()
+    {
+        return libros
+            .OrderByDescending(l => l.Titulo)
+            .ToList();
+    }
 }
